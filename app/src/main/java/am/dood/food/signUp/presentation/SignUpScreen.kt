@@ -1,11 +1,10 @@
-package am.dood.food.signIn.presentation
+package am.dood.food.signUp.presentation
 
 import am.dood.food.R
 import am.dood.food.common.commonPresentation.components.buttons.GoogleButton
 import am.dood.food.common.commonPresentation.components.buttons.SolidButton
 import am.dood.food.common.commonPresentation.components.text.SpannableText
 import am.dood.food.common.commonPresentation.components.textField.InputTextField
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,9 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun SignInScreen(
+fun SignUpScreen(
     modifier: Modifier = Modifier,
-    onSignUpClick: () -> Unit = {},
+    onSignInClick: () -> Unit = {},
     onForgotPasswordClick: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
@@ -48,20 +47,33 @@ fun SignInScreen(
                 .padding(
                     start = 24.dp,
                     end = 24.dp,
-                    top = 80.dp,
+                    top = 84.dp,
                 )
                 .imePadding()
         ) {
 
             Text(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 32.dp),
-                text = stringResource(R.string.login),
+                    .fillMaxWidth(),
+                text = stringResource(R.string.create_account),
                 style = TextStyle(
                     fontSize = 36.sp,
                     fontFamily = FontFamily(Font(R.font.roboto_regular)),
                     fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center,
+                )
+            )
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp, bottom = 24.dp),
+                text = stringResource(R.string.create_an_account_and_enjoy),
+                style = TextStyle(
+                    fontSize = 13.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_regular)),
+                    fontWeight = FontWeight.Normal,
+                    color = Color(0xFF000000),
                     textAlign = TextAlign.Center,
                 )
             )
@@ -87,6 +99,13 @@ fun SignInScreen(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(top = 24.dp),
+                placeholder = stringResource(R.string.full_name)
+            )
+
+            InputTextField(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
                 placeholder = stringResource(R.string.email_or_phone)
             )
 
@@ -95,23 +114,6 @@ fun SignInScreen(
                     .fillMaxWidth()
                     .padding(top = 16.dp),
                 placeholder = stringResource(R.string.password)
-            )
-
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 4.dp)
-                    .clickable {
-                        onForgotPasswordClick()
-                    },
-                text = stringResource(R.string.forget_password),
-                style = TextStyle(
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_regular)),
-                    fontWeight = FontWeight.Normal,
-                    color = Color(0x66000000),
-                    textAlign = TextAlign.End,
-                )
             )
 
             SolidButton(
@@ -125,15 +127,16 @@ fun SignInScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 12.dp),
-                fullText = stringResource(R.string.don_t_have_an_account_sign_up),
-                underlineText = stringResource(R.string.sign_up),
+                fullText = stringResource(R.string.already_have_an_account),
+                underlineText = stringResource(R.string.login),
                 color = Color(0xFF000000),
                 fontSize = 13,
                 fontFamily = FontFamily(Font(R.font.roboto_regular)),
                 fontWeight = FontWeight.Normal,
             ) {
-                onSignUpClick()
+                onSignInClick()
             }
         }
+
     }
 }

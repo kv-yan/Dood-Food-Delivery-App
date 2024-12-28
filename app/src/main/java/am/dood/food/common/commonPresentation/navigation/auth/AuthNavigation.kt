@@ -3,6 +3,7 @@ package am.dood.food.common.commonPresentation.navigation.auth
 import am.dood.food.R
 import am.dood.food.common.commonPresentation.ui.theme.AuthBackground
 import am.dood.food.signIn.presentation.SignInScreen
+import am.dood.food.signUp.presentation.SignUpScreen
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
@@ -32,18 +33,21 @@ fun AuthNavigation(
             modifier = modifier
         ) {
             composable<AuthNavDestination.Login> {
-                SignInScreen()
+                SignInScreen(
+                    onSignUpClick = {
+                        navController.navigate(AuthNavDestination.Register)
+                    },
+                    onForgotPasswordClick = {
+                        navController.navigate(AuthNavDestination.ForgotPassword)
+                    }
+                )
             }
 
             composable<AuthNavDestination.Register> {
-                Text(
-                    modifier = Modifier.fillMaxSize(),
-                    text = stringResource(R.string.register),
-                    textAlign = TextAlign.Center,
-                    fontSize = 18.sp,
-                    fontFamily = FontFamily(
-                        Font(R.font.montserrat_semibold)
-                    )
+                SignUpScreen(
+                    onSignInClick = {
+                        navController.navigateUp()
+                    }
                 )
             }
 

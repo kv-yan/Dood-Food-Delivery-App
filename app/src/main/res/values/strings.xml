@@ -13,4 +13,8 @@
     <string name="register">Register</string>
     <string name="sign_in_with_google">Sign In with Google</string>
     <string name="google">Google</string>
+    <string name="password">Password</string>
+    <string name="create_account">Create Account</string>
+    <string name="create_an_account_and_enjoy">Create an account to enjoy all the services</string>
+    <string name="already_have_an_account">Already Have An Account? Login</string>
 </resources>

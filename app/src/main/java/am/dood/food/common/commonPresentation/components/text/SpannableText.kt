@@ -19,12 +19,12 @@ fun SpannableText(
     modifier: Modifier = Modifier,
     fullText: String,
     underlineText: String,
-    onClick: (() -> Unit)? = null,
     color: Color = Color(0xFF000000),
     fontSize: Int = 13,
     fontFamily: FontFamily? = FontFamily.Default,
     fontWeight: FontWeight = FontWeight.Normal,
-    textAlign: TextAlign = TextAlign.Center
+    textAlign: TextAlign = TextAlign.Center,
+    onClick: (() -> Unit)? = null
 ) {
     val annotatedString = buildAnnotatedString {
         val startIndex = fullText.indexOf(underlineText)

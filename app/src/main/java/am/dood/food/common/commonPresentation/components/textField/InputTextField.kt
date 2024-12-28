@@ -50,7 +50,7 @@ fun InputTextField(
                 text = placeholder, style = TextStyle(
                     fontSize = 14.sp,
                     fontFamily = FontFamily(Font(R.font.roboto_regular)),
-                    fontWeight = FontWeight.W400,
+                    fontWeight = FontWeight.Normal,
                     color = TextFieldPlaceholderColor,
                 )
             )
