@@ -97,23 +97,25 @@ fun SignInScreen(
                 placeholder = stringResource(R.string.password)
             )
 
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 4.dp)
-                    .clickable {
-                        onForgotPasswordClick()
-                    },
-                text = stringResource(R.string.forget_password),
-                style = TextStyle(
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_regular)),
-                    fontWeight = FontWeight.Normal,
-                    color = Color(0x66000000),
-                    textAlign = TextAlign.End,
+            Box(Modifier.fillMaxWidth()) {
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(top = 4.dp)
+                        .clickable {
+                            onForgotPasswordClick()
+                        },
+                    text = stringResource(R.string.forget_password),
+                    style = TextStyle(
+                        fontSize = 11.sp,
+                        fontFamily = FontFamily(Font(R.font.roboto_regular)),
+                        fontWeight = FontWeight.Normal,
+                        color = Color(0x66000000),
+                        textAlign = TextAlign.End,
+                    )
                 )
-            )
 
+            }
             SolidButton(
                 modifier = Modifier
                     .fillMaxWidth()
