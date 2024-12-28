@@ -1,6 +1,8 @@
 package am.dood.food
 
-import am.dood.food.ui.theme.DoodFoodTheme
+import am.dood.food.common.commonPresentation.components.animation.AnimatedLogoScreen
+import am.dood.food.common.commonPresentation.navigation.app.AppNavigation
+import am.dood.food.common.commonPresentation.ui.theme.DoodFoodTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,7 +15,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DoodFoodTheme {
-                AnimatedLogoScreen(modifier = Modifier)
+                AnimatedLogoScreen(modifier = Modifier) {
+                    AppNavigation()
+                }
             }
         }
     }

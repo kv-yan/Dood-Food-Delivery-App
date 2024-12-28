@@ -1,6 +1,5 @@
-package am.dood.food.ui.theme
+package am.dood.food.common.commonPresentation.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

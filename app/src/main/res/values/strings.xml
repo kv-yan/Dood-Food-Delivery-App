@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Dood Food</string>
+    <string name="or">- OR -</string>
+    <string name="login">Login</string>
+    <string name="empty_string" />
+    <string name="full_name">Full Name</string>
+    <string name="email_or_phone">Email Address or Phone Number</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="don_t_have_an_account_sign_up">Don’t Have An Account? Sign Up</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="register">Register</string>
+    <string name="sign_in_with_google">Sign In with Google</string>
+    <string name="google">Google</string>
 </resources>
