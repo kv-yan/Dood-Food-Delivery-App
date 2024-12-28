@@ -17,4 +17,8 @@
     <string name="create_account">Create Account</string>
     <string name="create_an_account_and_enjoy">Create an account to enjoy all the services</string>
     <string name="already_have_an_account">Already Have An Account? Login</string>
+    <string name="recover_password">Recover Password</string>
+    <string name="email">Enter Email</string>
+    <string name="send_code">Send Code</string>
+    <string name="password_reset_instructions">You will receive an email with instructions to reset your password.</string>
 </resources>

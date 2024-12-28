@@ -1,9 +1,8 @@
-package am.dood.food.signUp.presentation
+package am.dood.food.forgotPassword.presentation
 
 import am.dood.food.R
 import am.dood.food.common.commonPresentation.components.buttons.GoogleButton
 import am.dood.food.common.commonPresentation.components.buttons.SolidButton
-import am.dood.food.common.commonPresentation.components.text.SpannableText
 import am.dood.food.common.commonPresentation.components.textField.InputTextField
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,11 +27,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun SignUpScreen(
+fun ForgotPasswordScreen(
     modifier: Modifier = Modifier,
-    onSignInClick: () -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -54,7 +53,7 @@ fun SignUpScreen(
             Text(
                 modifier = Modifier
                     .fillMaxWidth(),
-                text = stringResource(R.string.create_account),
+                text = stringResource(R.string.recover_password),
                 style = TextStyle(
                     fontSize = 36.sp,
                     fontFamily = FontFamily(Font(R.font.roboto_regular)),
@@ -66,7 +65,10 @@ fun SignUpScreen(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 4.dp, bottom = 24.dp),
+                    .padding(
+                        top = 4.dp,
+                        bottom = 24.dp,
+                    ),
                 text = stringResource(R.string.create_an_account_and_enjoy),
                 style = TextStyle(
                     fontSize = 13.sp,
@@ -98,44 +100,39 @@ fun SignUpScreen(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(top = 24.dp),
-                placeholder = stringResource(R.string.full_name)
+                placeholder = stringResource(R.string.email)
             )
 
-            InputTextField(
-                modifier = modifier
+            Text(
+                modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp),
-                placeholder = stringResource(R.string.email_or_phone)
+                    .padding(
+                        top = 4.dp,
+                        bottom = 24.dp,
+                        start = 8.dp,
+                        end = 8.dp,
+                    ),
+                text = stringResource(R.string.password_reset_instructions),
+                style = TextStyle(
+                    fontSize = 13.sp,
+                    fontFamily = FontFamily(Font(R.font.roboto_regular)),
+                    fontWeight = FontWeight.Normal,
+                    color = Color(0x66000000),
+                    textAlign = TextAlign.Start,
+                )
             )
 
-            InputTextField(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                placeholder = stringResource(R.string.password)
-            )
 
             SolidButton(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 32.dp, start = 24.dp, end = 24.dp),
-                text = stringResource(R.string.sign_in)
+                    .padding(
+                        top = 32.dp,
+                        start = 24.dp,
+                        end = 24.dp,
+                    ),
+                text = stringResource(R.string.send_code)
             )
-
-            SpannableText(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp),
-                fullText = stringResource(R.string.already_have_an_account),
-                underlineText = stringResource(R.string.login),
-                color = Color(0xFF000000),
-                fontSize = 13,
-                fontFamily = FontFamily(Font(R.font.roboto_regular)),
-                fontWeight = FontWeight.Normal,
-            ) {
-                onSignInClick()
-            }
         }
-
     }
 }
