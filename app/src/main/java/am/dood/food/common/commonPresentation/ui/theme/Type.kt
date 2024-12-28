@@ -1,4 +1,4 @@
-package am.dood.food.ui.theme
+package am.dood.food.common.commonPresentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
