@@ -1,7 +1,7 @@
 package am.dood.food.common.commonPresentation.components.buttons
 
 import am.dood.food.R
-import am.dood.food.common.commonPresentation.ui.theme.PrimaryOrange
+import am.dood.food.common.commonPresentation.ui.theme.LightOrange
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,7 +32,7 @@ fun SolidButton(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
-            containerColor = PrimaryOrange,
+            containerColor = LightOrange,
             contentColor = Color.White,
         ),
         shape = RoundedCornerShape(12.dp),

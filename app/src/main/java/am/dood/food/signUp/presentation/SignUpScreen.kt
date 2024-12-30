@@ -29,8 +29,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun SignUpScreen(
-    modifier: Modifier = Modifier,
-    onSignInClick: () -> Unit = {},
+    modifier: Modifier = Modifier, onSignInClick: () -> Unit = {}, navigateToMenu: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
     Box(
@@ -52,8 +51,7 @@ fun SignUpScreen(
         ) {
 
             Text(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.create_account),
                 style = TextStyle(
                     fontSize = 36.sp,
@@ -120,7 +118,9 @@ fun SignUpScreen(
                     .fillMaxWidth()
                     .padding(top = 32.dp, start = 24.dp, end = 24.dp),
                 text = stringResource(R.string.sign_in)
-            )
+            ) {
+                navigateToMenu()
+            }
 
             SpannableText(
                 modifier = Modifier

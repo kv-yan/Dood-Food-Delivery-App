@@ -32,7 +32,8 @@ import androidx.compose.ui.unit.sp
 fun SignInScreen(
     modifier: Modifier = Modifier,
     onSignUpClick: () -> Unit = {},
-    onForgotPasswordClick: () -> Unit = {}
+    onForgotPasswordClick: () -> Unit = {},
+    navigateToMenu: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
     Box(
@@ -121,7 +122,9 @@ fun SignInScreen(
                     .fillMaxWidth()
                     .padding(top = 32.dp, start = 24.dp, end = 24.dp),
                 text = stringResource(R.string.sign_in)
-            )
+            ) {
+                navigateToMenu()
+            }
 
             SpannableText(
                 modifier = Modifier
