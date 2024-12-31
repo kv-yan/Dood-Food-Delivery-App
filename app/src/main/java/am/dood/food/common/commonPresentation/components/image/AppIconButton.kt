@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 fun AppIconButton(
     modifier: Modifier = Modifier,
     icon: Int,
+    buttonColor: Color = DarkOrange,
     onClick: () -> Unit = {},
 ) {
     Box(
@@ -30,7 +31,9 @@ fun AppIconButton(
         contentAlignment = Alignment.Center,
     ) {
         Surface(
-            modifier = Modifier.size(34.dp), color = DarkOrange, shape = RoundedCornerShape(10.dp)
+            modifier = Modifier.size(34.dp),
+            color = buttonColor,
+            shape = RoundedCornerShape(10.dp),
         ) {}
 
         Icon(

@@ -43,7 +43,9 @@ class MenuViewModel(
         val scope = CoroutineScope(Dispatchers.IO)
         getAssortmentsUseCase().onEach {
             _screenState.value = MenuScreenState.Success(it)
-            if (it.isEmpty()) {
+            if (it.isNotEmpty()) {
+                _selectedAssortment.value = it.first()
+            } else {
                 _screenState.value = MenuScreenState.Error("No data")
             }
         }.catch {
