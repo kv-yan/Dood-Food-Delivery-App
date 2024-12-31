@@ -6,8 +6,11 @@ import am.dood.food.menu.domain.usaCase.GetAssortmentsUseCase
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
@@ -28,6 +31,9 @@ class MenuViewModel(
     private val _isShowingScreen = MutableStateFlow(false)
     val isShowingScreen: StateFlow<Boolean> = _isShowingScreen.asStateFlow()
 
+    private val _selectedAssortmentIndex = MutableSharedFlow<Int>(1)
+    val selectedAssortmentIndex: SharedFlow<Int> = _selectedAssortmentIndex.asSharedFlow()
+
     init {
         fetchAssortments()
     }
@@ -35,7 +41,11 @@ class MenuViewModel(
 
     fun setShowingScreen(boolean: Boolean) = run { _isShowingScreen.value = boolean }
 
-    fun selectAssortment(item: FoodAssortment) = run { _selectedAssortment.value = item }
+    fun selectAssortment(item: FoodAssortment, index: Int) = run {
+        _selectedAssortment.value = item
+        _selectedAssortmentIndex.tryEmit(index)
+
+    }
 
     fun selectProduct(item: Product) = run { _selectedProduct.value = item }
 
@@ -52,5 +62,4 @@ class MenuViewModel(
             _screenState.value = MenuScreenState.Error(it.message ?: "Unknown error")
         }.launchIn(scope)
     }
-
 }

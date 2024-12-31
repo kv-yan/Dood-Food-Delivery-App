@@ -20,7 +20,7 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun AppNavigation(
     modifier: Modifier = Modifier,
-    startDestination: AppNavDestination = AppNavDestination.Menu,
+    startDestination: AppNavDestination = AppNavDestination.Auth,
     onChangeTheme: (isDarkTheme: Boolean) -> Unit = {},
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
