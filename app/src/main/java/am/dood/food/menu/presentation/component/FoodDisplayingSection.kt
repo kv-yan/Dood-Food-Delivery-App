@@ -3,6 +3,7 @@ package am.dood.food.menu.presentation.component
 
 import am.dood.food.R
 import am.dood.food.menu.domain.model.FoodAssortment
+import am.dood.food.menu.domain.model.Product
 import am.dood.food.menu.presentation.component.items.AssortmentPagerItem
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,21 +29,31 @@ fun FoodDisplayingSection(
     modifier: Modifier = Modifier,
     assortment: List<FoodAssortment> = emptyList(),
     selectedAssortment: FoodAssortment? = null,
+    selectedProduct: Product? = null,
     pagerState: PagerState,
     onAssortmentChanged: (FoodAssortment) -> Unit = {},
+    onMenuVisibilityChanged: (Boolean) -> Unit = {},
+    onProductChanged: (Product?) -> Unit = {},
+    onAppClose: () -> Unit = {}
 ) {
-
 
     VerticalPager(
         modifier = modifier.fillMaxSize(),
         state = pagerState,
         pageSpacing = 0.dp,
+        userScrollEnabled = selectedProduct == null
     ) {
         if (selectedAssortment != null) {
             LaunchedEffect(pagerState.currentPage) {
                 onAssortmentChanged(assortment[pagerState.currentPage])
             }
-            AssortmentPagerItem(assortment = selectedAssortment)
+            AssortmentPagerItem(
+                selectedProduct = selectedProduct,
+                assortment = selectedAssortment,
+                onMenuVisibilityChanged = onMenuVisibilityChanged,
+                onProductChanged = onProductChanged,
+                onAppClose = onAppClose
+                )
         } else {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(
