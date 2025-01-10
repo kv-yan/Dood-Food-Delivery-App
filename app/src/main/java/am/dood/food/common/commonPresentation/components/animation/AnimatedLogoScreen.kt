@@ -1,6 +1,7 @@
 package am.dood.food.common.commonPresentation.components.animation
 
 import am.dood.food.R
+import am.dood.food.common.commonPresentation.ui.theme.LightOrange
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
@@ -65,7 +66,7 @@ fun AnimatedLogoScreen(modifier: Modifier = Modifier, appContent: @Composable ()
     val backgroundColor: Color by transition.animateColor(
         transitionSpec = { tween(durationMillis = 800, easing = LinearEasing) },
         label = "BackgroundColor"
-    ) { animated -> if (animated) Color.Transparent else Color(0xFFFD7646) }
+    ) { animated -> if (animated) Color.Transparent else LightOrange }
 
     // Start Animation with Delay
     LaunchedEffect(Unit) {

@@ -12,4 +12,5 @@ val Pink40 = Color(0xFF7D5260)
 
 val TextFieldColor = Color(0xFFF4F4F4)
 val TextFieldPlaceholderColor = Color(0x82000000)
-val PrimaryOrange = Color(0xFFFD7646)
+val LightOrange = Color(0xFFFD7646)
+val DarkOrange = Color(0xFFF85641)
