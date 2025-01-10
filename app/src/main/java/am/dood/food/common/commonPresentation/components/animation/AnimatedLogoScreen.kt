@@ -42,6 +42,7 @@ fun AnimatedLogoScreen(modifier: Modifier = Modifier, appContent: @Composable ()
     ) { animated -> if (animated) 1f else 0f }
 
     val isHalfway = animationProgress >= 0.1f
+    val isComplete = animationProgress >= 1f
 
     val horizontalMargin by transition.animateDp(
         transitionSpec = { tween(durationMillis = 1300, easing = FastOutSlowInEasing) },
@@ -70,41 +71,39 @@ fun AnimatedLogoScreen(modifier: Modifier = Modifier, appContent: @Composable ()
 
     // Start Animation with Delay
     LaunchedEffect(Unit) {
-        delay(350)
+        delay(250)
         startAnimation = true
     }
 
-    // Preload Navigation Content
-    var isContentLoaded by remember { mutableStateOf(false) }
-    LaunchedEffect(isHalfway) {
-        if (isHalfway) {
-            isContentLoaded = true // Preload content when animation is halfway
-        }
-    }
 
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(backgroundColor)
     ) {
-        if (isContentLoaded) {
-            appContent() // Show navigation only when it's preloaded
-        }
+        appContent()
 
-        // Animated Logo
         Box(
             modifier = Modifier
-                .padding(start = horizontalMargin, top = verticalMargin)
-                .size(width = logoWidth, height = logoHeight)
-                .align(Alignment.TopStart),
-            contentAlignment = Alignment.Center
+                .fillMaxSize()
+                .background(backgroundColor)
         ) {
-            Image(
-                modifier = Modifier.fillMaxSize(),
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = stringResource(R.string.app_name)
-            )
+            Box(
+                modifier = Modifier
+                    .padding(start = horizontalMargin, top = verticalMargin)
+                    .size(width = logoWidth, height = logoHeight)
+                    .align(Alignment.TopStart),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    modifier = Modifier.fillMaxSize(),
+                    painter = painterResource(id = R.drawable.logo),
+                    contentDescription = stringResource(R.string.app_name)
+                )
+            }
+
         }
+        // Animated Logo
     }
 }
 
