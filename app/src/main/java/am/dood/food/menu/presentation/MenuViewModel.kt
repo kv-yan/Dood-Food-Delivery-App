@@ -31,6 +31,9 @@ class MenuViewModel(
     private val _isShowingScreen = MutableStateFlow(false)
     val isShowingScreen: StateFlow<Boolean> = _isShowingScreen.asStateFlow()
 
+    private val _isDetailsVisible = MutableStateFlow(false)
+    val isShowingLeftMenu: StateFlow<Boolean> = _isDetailsVisible.asStateFlow()
+
     private val _selectedAssortmentIndex = MutableSharedFlow<Int>(1)
     val selectedAssortmentIndex: SharedFlow<Int> = _selectedAssortmentIndex.asSharedFlow()
 
@@ -41,13 +44,15 @@ class MenuViewModel(
 
     fun setShowingScreen(boolean: Boolean) = run { _isShowingScreen.value = boolean }
 
+    fun setShowingLeftMenu(boolean: Boolean) = run { _isDetailsVisible.value = boolean }
+
     fun selectAssortment(item: FoodAssortment, index: Int) = run {
         _selectedAssortment.value = item
         _selectedAssortmentIndex.tryEmit(index)
 
     }
 
-    fun selectProduct(item: Product) = run { _selectedProduct.value = item }
+    fun setSelectProduct(item: Product?) = run { _selectedProduct.value = item }
 
     private fun fetchAssortments() {
         val scope = CoroutineScope(Dispatchers.IO)

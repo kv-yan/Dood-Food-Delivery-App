@@ -10,7 +10,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -74,11 +73,14 @@ private fun MenuContent(
     viewModel: MenuViewModel,
 ) {
     val isShowingScreen by viewModel.isShowingScreen.collectAsState()
+    val isShowingLeftMenu by viewModel.isShowingLeftMenu.collectAsState()
+
     val screensState by viewModel.screenState.collectAsState()
     val screenSuccessState = screensState as? MenuScreenState.Success
     val assortment = screenSuccessState?.assortment ?: emptyList()
     val selectedAssortment by viewModel.selectedAssortment.collectAsState()
     val selectedAssortmentIndex by viewModel.selectedAssortmentIndex.collectAsState(0)
+    val selectedProduct by viewModel.selectedProduct.collectAsState()
 
     val pagerState = rememberPagerState(0) { assortment.size }
 
@@ -92,19 +94,24 @@ private fun MenuContent(
         viewModel.setShowingScreen(true)
     }
 
-    Row(modifier = modifier.fillMaxSize()) {
-
-
-        LeftMenu(assortment = assortment,
-            isShowingMenu = isShowingScreen,
+    Box(modifier = modifier.fillMaxSize()) {
+        LeftMenu(
+            modifier = Modifier.align(Alignment.TopStart),
+            assortment = assortment,
+            isShowingMenu = isShowingScreen && isShowingLeftMenu,
             selectedIndex = selectedAssortmentIndex,
             onAssortmentChanged = {
-                viewModel.selectAssortment(item = it, index = assortment.indexOf(it))
-            })
+                viewModel.selectAssortment(
+                    item = it,
+                    index = assortment.indexOf(it),
+                )
+            }
+        )
 
-        // Second AnimatedVisibility (Right to Left)
         AnimatedVisibility(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = if (isShowingLeftMenu) 52.dp else 0.dp),
             visible = isShowingScreen,
             enter = slideInHorizontally(
                 initialOffsetX = { it },
@@ -116,11 +123,19 @@ private fun MenuContent(
                 FoodDisplayingSection(
                     assortment = assortment,
                     selectedAssortment = selectedAssortment,
+                    selectedProduct = selectedProduct,
                     pagerState = pagerState,
                     onAssortmentChanged = {
                         val index = assortment.indexOf(it)
                         viewModel.selectAssortment(it, index)
-                    })
+                    },
+                    onMenuVisibilityChanged = {
+                        viewModel.setShowingLeftMenu(it)
+                    },
+                    onProductChanged = {
+                        viewModel.setSelectProduct(it)
+                    }
+                )
 
                 AppIconButton(
                     modifier = Modifier
