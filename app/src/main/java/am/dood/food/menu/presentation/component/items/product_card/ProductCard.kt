@@ -1,13 +1,13 @@
 package am.dood.food.menu.presentation.component.items.product_card
 
 import am.dood.food.R
+import am.dood.food.common.commonPresentation.components.buttons.SolidButton
 import am.dood.food.common.commonPresentation.components.image.Shadowed
 import am.dood.food.common.commonPresentation.components.stars.StarRating
 import am.dood.food.menu.domain.model.Country
 import am.dood.food.menu.domain.model.Product
 import am.dood.food.menu.domain.model.ProductDetails
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateFloat
@@ -18,21 +18,23 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -48,6 +50,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -67,97 +70,105 @@ const val EXIT_ANIMATION_DURATION = 350
 fun ProductCard(
     modifier: Modifier = Modifier,
     product: Product,
+    isExpanded: MutableState<Boolean>,
     onAppClose: () -> Unit = {},
     onClick: (menuVisible: Boolean) -> Unit = {}
 ) {
     val systemUiController = rememberSystemUiController()
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
-    var isExpanded by remember { mutableStateOf(false) }
     var productBackgroundImageHeight by remember { mutableIntStateOf(0) }
 
     val transition = updateTransition(targetState = isExpanded, label = "ProductCardTransition")
 
     val cardHeight by transition.animateDp(label = "CardHeight",
-        transitionSpec = { tween(durationMillis = if (isExpanded) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION) }) { expanded ->
-        if (expanded) screenHeight else 240.dp
+        transitionSpec = { tween(durationMillis = ENTER_ANIMATION_DURATION) }) { expanded ->
+        if (expanded.value) screenHeight else 240.dp
     }
     val cardWidth by transition.animateDp(label = "CardWidth",
-        transitionSpec = { tween(durationMillis = if (isExpanded) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION) }) { expanded ->
-        if (expanded) screenWidth else 168.dp
+        transitionSpec = { tween(durationMillis = ENTER_ANIMATION_DURATION) }) { expanded ->
+        if (expanded.value) screenWidth else 168.dp
     }
     val imagePaddingTop by transition.animateDp(label = "ImagePaddingTop",
-        transitionSpec = { tween(durationMillis = if (isExpanded) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION) }) { expanded ->
-        if (expanded) 82.dp else 0.dp
+        transitionSpec = { tween(durationMillis = if (isExpanded.value) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION) }) { expanded ->
+        if (expanded.value) 82.dp else 0.dp
     }
     val cardPaddingTop by transition.animateDp(label = "ImagePaddingTop",
-        transitionSpec = { tween(durationMillis = if (isExpanded) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION) }) { expanded ->
-        if (expanded) 0.dp else 48.dp
+        transitionSpec = { tween(durationMillis = if (isExpanded.value) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION) }) { expanded ->
+        if (expanded.value) 0.dp else 48.dp
     }
     val imageRotation by transition.animateFloat(label = "ImageRotation", transitionSpec = {
-        if (isExpanded) {
+        if (isExpanded.value) {
             tween(
-                durationMillis = if (isExpanded) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION,
+                durationMillis = if (isExpanded.value) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION,
                 easing = CubicBezierEasing(0.4f, 0.0f, 0.2f, 1.3f) // Overshoot easing
             )
         } else {
             tween(
-                durationMillis = if (isExpanded) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION,
+                durationMillis = if (isExpanded.value) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION,
                 easing = CubicBezierEasing(0.4f, 0.2f, 0.0f, 0.4f) // Overshoot easing
             )
 
         }
     }) { expanded ->
-        if (expanded) 0f else 90f
+        if (expanded.value) 0f else 90f
     }
     val imageSize by transition.animateDp(label = "ImageSize", transitionSpec = {
         tween(
-            durationMillis = if (isExpanded) ENTER_ANIMATION_DURATION
+            durationMillis = if (isExpanded.value) ENTER_ANIMATION_DURATION
             else EXIT_ANIMATION_DURATION
         )
     }) { expanded ->
-        if (expanded) 324.dp else 172.dp
+        if (expanded.value) 324.dp else 172.dp
     }
 
 
-    LaunchedEffect(isExpanded) {
-        systemUiController.setSystemBarsColor(if (isExpanded) Color(0xFFF3F3F3) else Color.Transparent)
+    SideEffect {
+        systemUiController.setSystemBarsColor(if (isExpanded.value) Color(0xFFF3F3F3) else Color.Transparent)
         systemUiController.statusBarDarkContentEnabled = true
     }
 
-    if (isExpanded) BackHandler {
-        println("Back pressed ex isExpanded :: $isExpanded")
+    if (isExpanded.value) BackHandler {
         onClick(true)
-        isExpanded = false
+        isExpanded.value = false
     }
     else {
         BackHandler {
-            println("Back pressed ex isExpanded :: $isExpanded")
             onAppClose()
         }
     }
+    val scrollState = rememberScrollState()
+
 
     Box(
-        modifier = Modifier.padding(if (isExpanded) 0.dp else 12.dp)
+        modifier = Modifier
+            .padding(if (isExpanded.value) 0.dp else 12.dp)
     ) {
-        Card(
-            modifier = modifier
-                .align(Alignment.BottomCenter)
-                .width(cardWidth)
-                .padding(top = cardPaddingTop)
-                .height(cardHeight),
-            elevation = CardDefaults.cardElevation(defaultElevation = if (isExpanded) 0.dp else 8.dp),
+        Card(modifier = modifier
+            .align(Alignment.BottomCenter)
+            .width(cardWidth)
+            .padding(top = cardPaddingTop, bottom = 8.dp)
+            .height(cardHeight),
+            elevation = CardDefaults.cardElevation(defaultElevation = if (isExpanded.value) 0.dp else 8.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White),
             onClick = {
-                isExpanded = !isExpanded
-                onClick(!isExpanded)
+                isExpanded.value = !isExpanded.value
+                onClick(!isExpanded.value)
             }) {
             Column(
                 modifier = Modifier
                     .padding(16.dp)
-                    .fillMaxSize(),
+                    .fillMaxWidth()
+                    .fillMaxSize()
+                    .let {
+                        if (isExpanded.value) it
+                            .verticalScroll(scrollState)
+                            .heightIn(
+                                min = 260.dp, max = 1500.dp
+                            ) else it
+                    },
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = if (isExpanded) Arrangement.Top else Arrangement.Bottom
+                verticalArrangement = if (isExpanded.value) Arrangement.Top else Arrangement.Bottom
             ) {
                 // Convert px to dp
                 val productBackgroundImageHeightDp =
@@ -167,38 +178,75 @@ fun ProductCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
-                            top = if (isExpanded) productBackgroundImageHeightDp else 16.dp,
+                            top = if (isExpanded.value) productBackgroundImageHeightDp else 16.dp,
                             bottom = 16.dp
                         ),
                     rating = product.rating,
                     maxStars = 5,
                 )
 
-                if (isExpanded) ProductDetailsSection(
+                if (isExpanded.value) ProductDetailsSection(
                     modifier = Modifier
                         .width(width = cardWidth)
                         .padding(bottom = 16.dp),
                     productDetails = product.productDetails
                 )
 
-                if (isExpanded) ProductIngredientSection(
+                if (isExpanded.value) ProductIngredientSection(
                     modifier = Modifier
                         .width(width = cardWidth)
                         .padding(bottom = 16.dp),
                     ingredients = product.productIngredients
                 )
-                if (!isExpanded) ProductCountrySection(
+                if (!isExpanded.value) ProductCountrySection(
                     modifier = Modifier.fillMaxWidth(),
                     country = product.country,
                     productName = product.name
                 )
-                if (!isExpanded) ProductPriceSection(
+                if (!isExpanded.value) ProductPriceSection(
                     modifier = Modifier.fillMaxWidth(), price = product.price.toFloat()
                 )
+
+                if (isExpanded.value) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        var quantity by remember { mutableIntStateOf(1) }
+                        ProductDetailsQuantityController(quantity = quantity) {
+                            quantity = it
+                        }
+
+                        Text(
+                            text = stringResource(R.string.product_price, quantity * product.price),
+                            style = TextStyle(
+                                fontSize = 24.sp,
+                                fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
+                                fontWeight = FontWeight(600),
+                                color = Color(0xFFFD7646),
+                            )
+                        )
+                    }
+
+                    SolidButton(modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                        text = stringResource(R.string.order_now),
+                        onClick = {}) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_bag),
+                            contentDescription = "Cart",
+                            tint = Color.White
+                        )
+                    }
+                }
             }
         }
 
-        if (isExpanded) Image(
+        if (isExpanded.value) Image(
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .width(screenWidth)
@@ -230,44 +278,18 @@ fun ProductCard(
         }
 
         // Action bar
-        AnimatedVisibility(
+        ProductDetailsActionBar(
             modifier = Modifier
                 .width(cardWidth)
                 .align(Alignment.TopCenter)
                 .padding(top = 16.dp)
-                .systemBarsPadding(), visible = isExpanded
+                .systemBarsPadding(),
+            isExpanded = isExpanded,
+            product = product
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(
-                    onClick = {
-                        isExpanded = false
-                        onClick(false)
-                    },
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_back),
-                        contentDescription = "Close",
-                    )
-                }
-
-                Text(
-                    text = product.name,
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
-                        fontWeight = FontWeight.W600,
-                        color = Color(0xFF1B1B1B),
-                    ),
-                )
-
-                Spacer(modifier = Modifier.size(34.dp))
-            }
+            isExpanded.value = false
+            onClick(true)
         }
-
     }
 }
 
@@ -275,8 +297,9 @@ fun ProductCard(
 @Preview
 @Composable
 private fun FoodAssortmentItemPreview() {
+    val isExpanded = remember { mutableStateOf(false) }
     ProductCard(
-        product = Product(
+        isExpanded = isExpanded, product = Product(
             productId = 0,
             name = "Pizza Margarita",
             price = 10.0,

@@ -41,7 +41,7 @@ fun FoodDisplayingSection(
         modifier = modifier.fillMaxSize(),
         state = pagerState,
         pageSpacing = 0.dp,
-        userScrollEnabled = selectedProduct == null
+        userScrollEnabled = false
     ) {
         if (selectedAssortment != null) {
             LaunchedEffect(pagerState.currentPage) {
@@ -53,7 +53,7 @@ fun FoodDisplayingSection(
                 onMenuVisibilityChanged = onMenuVisibilityChanged,
                 onProductChanged = onProductChanged,
                 onAppClose = onAppClose
-                )
+            )
         } else {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(

@@ -23,4 +23,5 @@
     <string name="password_reset_instructions">You will receive an email with instructions to reset your password.</string>
     <string name="recommendation">Recommendation</string>
     <string name="product_price">$ %1$s</string>
+    <string name="order_now">Order Now</string>
 </resources>

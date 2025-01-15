@@ -46,6 +46,8 @@ fun AssortmentPagerItem(
 ) {
     var detailsSourceRow by remember { mutableStateOf<RowType?>(null) }
     val scrollState = rememberScrollState()
+    val row1ExpandedItem = remember { mutableStateOf(false) }
+    val row2ExpandedItem = remember { mutableStateOf(false) }
 
     // LazyRow States
     val firstRowState = rememberLazyListState()
@@ -55,7 +57,7 @@ fun AssortmentPagerItem(
     suspend fun scrollToItem(rowState: LazyListState, product: Product) {
         val index = assortment.products.indexOf(product)
         if (index >= 0) {
-        rowState.animateScrollToItem(index)
+            rowState.animateScrollToItem(index)
         }
     }
 
@@ -72,7 +74,7 @@ fun AssortmentPagerItem(
             .verticalScroll(
                 state = scrollState,
                 enabled = selectedProduct == null
-                )
+            )
             .systemBarsPadding(),
     ) {
         AnimatedVisibility(
@@ -111,11 +113,15 @@ fun AssortmentPagerItem(
                 userScrollEnabled = selectedProduct == null // Disable user scroll when a product is selected
             ) {
                 items(items = assortment.products, key = { it.productId }) {
-                    ProductCard(product = it, onAppClose = onAppClose) { menuVisible ->
-                        println("isExpanded :: $menuVisible")
-                        onMenuVisibilityChanged(menuVisible)
+                    ProductCard(
+                        product = it,
+                        isExpanded = row1ExpandedItem,
+                        onAppClose = onAppClose
+                    ) { menuVisible ->
                         onProductChanged(if (menuVisible) null else it)
+                        onMenuVisibilityChanged(menuVisible)
                         detailsSourceRow = if (!menuVisible) RowType.FIRST else null
+                        row1ExpandedItem.value = !menuVisible
                     }
                 }
             }
@@ -145,7 +151,12 @@ fun AssortmentPagerItem(
                 userScrollEnabled = selectedProduct == null // Disable user scroll when a product is selected
             ) {
                 items(items = assortment.products, key = { it.productId }) {
-                    ProductCard(product = it) { menuVisible ->
+                    ProductCard(
+                        product = it,
+                        isExpanded = row2ExpandedItem,
+                        onAppClose = onAppClose
+                    ) { menuVisible ->
+                        row2ExpandedItem.value = !menuVisible
                         onMenuVisibilityChanged(menuVisible)
                         onProductChanged(if (menuVisible) null else it)
                         detailsSourceRow = if (!menuVisible) RowType.SECOND else null
