@@ -19,8 +19,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             val mainViewModel = koinViewModel<MainViewModel>()
             val isDarkTheme by mainViewModel.isDarkTheme.collectAsState(true)
+            val onAppClose = { finish() }
             DoodFoodTheme {
-                AppNavigation {
+                AppNavigation(onAppClose = onAppClose) {
                     mainViewModel.setDarkTheme(it)
                 }
                 ChangeSystemBarsTheme(isDarkTheme, this)

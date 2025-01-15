@@ -8,7 +8,4 @@ sealed class AppNavDestination {
 
     @Serializable
     data object Menu : AppNavDestination()
-
-    @Serializable
-    data object Details : AppNavDestination()
 }

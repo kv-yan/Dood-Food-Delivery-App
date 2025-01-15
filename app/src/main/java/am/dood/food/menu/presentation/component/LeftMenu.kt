@@ -41,6 +41,7 @@ import androidx.compose.ui.zIndex
 @SuppressLint("UseOfNonLambdaOffsetOverload")
 @Composable
 fun LeftMenu(
+    modifier: Modifier,
     assortment: List<FoodAssortment>,
     isShowingMenu: Boolean,
     onAssortmentChanged: (FoodAssortment) -> Unit,
@@ -48,7 +49,7 @@ fun LeftMenu(
 ) {
 
     AnimatedVisibility(
-        modifier = Modifier
+        modifier = modifier
             .zIndex(1000f)
             .fillMaxHeight()
             .width(52.dp),
