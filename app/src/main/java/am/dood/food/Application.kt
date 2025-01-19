@@ -19,6 +19,5 @@ class Application : Application() {
                 menuDomainModule,
             )
         }
-
     }
 }

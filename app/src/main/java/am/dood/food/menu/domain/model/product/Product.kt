@@ -1,4 +1,6 @@
-package am.dood.food.menu.domain.model
+package am.dood.food.menu.domain.model.product
+
+import am.dood.food.menu.domain.model.Country
 
 data class Product(
     val productId: Int,
@@ -7,20 +9,8 @@ data class Product(
     val image: String,
     val country: Country,
     val rating: Float = 3.7f,
+    val productType: ProductType = ProductType.OTHER,
     val productDetails: ProductDetails,
     val productIngredients: List<ProductIngredient>
 )
-
-
-data class ProductDetails(
-    val calories: String,
-    val weight: String,
-    val preparationTime: String
-)
-
-data class ProductIngredient(
-    val name: String,
-    val icon: Int,
-)
-
 

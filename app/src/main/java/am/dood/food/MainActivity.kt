@@ -21,7 +21,9 @@ class MainActivity : ComponentActivity() {
             val isDarkTheme by mainViewModel.isDarkTheme.collectAsState(true)
             val onAppClose = { finish() }
             DoodFoodTheme {
-                AppNavigation(onAppClose = onAppClose) {
+                AppNavigation(
+                    onAppClose = onAppClose
+                ) {
                     mainViewModel.setDarkTheme(it)
                 }
                 ChangeSystemBarsTheme(isDarkTheme, this)

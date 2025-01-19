@@ -33,11 +33,14 @@ fun AuthNavigation(
             navController = navController, startDestination = startDestination, modifier = modifier
         ) {
             composable<AuthNavDestination.Login> {
-                SignInScreen(onSignUpClick = {
-                    navController.navigate(AuthNavDestination.Register)
-                }, onForgotPasswordClick = {
-                    navController.navigate(AuthNavDestination.ForgotPassword)
-                }, navigateToMenu = navigateToMenu
+                SignInScreen(
+                    onSignUpClick = {
+                        navController.navigate(AuthNavDestination.Register)
+                    },
+                    onForgotPasswordClick = {
+                        navController.navigate(AuthNavDestination.ForgotPassword)
+                    },
+                    navigateToMenu = navigateToMenu
                 )
             }
 
@@ -45,7 +48,8 @@ fun AuthNavigation(
                 SignUpScreen(
                     onSignInClick = {
                         navController.navigateUp()
-                    }, navigateToMenu = navigateToMenu
+                    },
+                    navigateToMenu = navigateToMenu
                 )
             }
 

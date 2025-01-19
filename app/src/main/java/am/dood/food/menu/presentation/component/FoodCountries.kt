@@ -1,7 +1,8 @@
 package am.dood.food.menu.presentation.component
 
-import am.dood.food.R
+import am.dood.food.common.commonPresentation.ui.theme.LightGray
 import am.dood.food.common.commonPresentation.ui.theme.LightOrange
+import am.dood.food.common.commonPresentation.ui.theme.MediumTextStyle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -18,21 +19,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 
 @Composable
@@ -51,7 +45,7 @@ fun FoodCountries(modifier: Modifier = Modifier, country: List<String>) {
                 modifier = Modifier.padding(start = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                var textWidth by remember { mutableStateOf(0) }
+                var textWidth by remember { mutableIntStateOf(0) }
 
                 Text(modifier = Modifier
                     .clickable {
@@ -59,12 +53,7 @@ fun FoodCountries(modifier: Modifier = Modifier, country: List<String>) {
                     }
                     .onGloballyPositioned { layoutCoordinates ->
                         textWidth = layoutCoordinates.size.width
-                    }, text = item, style = TextStyle(
-                    fontSize = 14.sp,
-                    fontFamily = FontFamily(Font(R.font.montserrat_medium)),
-                    fontWeight = FontWeight.W500,
-                    color = Color(0xFF1B1B1B),
-                )
+                    }, text = item, style = MediumTextStyle
                 )
 
                 if (index == selectedIndex) {
@@ -84,7 +73,7 @@ fun FoodCountries(modifier: Modifier = Modifier, country: List<String>) {
                     modifier = Modifier
                         .width(1.5.dp)
                         .height(24.dp)
-                        .background(Color(0xFFE5E5E5))
+                        .background(LightGray)
                 )
             }
         }

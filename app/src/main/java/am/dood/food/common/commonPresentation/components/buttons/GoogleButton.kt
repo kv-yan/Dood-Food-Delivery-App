@@ -1,6 +1,7 @@
 package am.dood.food.common.commonPresentation.components.buttons
 
 import am.dood.food.R
+import am.dood.food.common.commonPresentation.ui.theme.MediumDimmedTextStyle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -15,12 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
 fun GoogleButton(
@@ -50,12 +46,7 @@ fun GoogleButton(
 
             Text(
                 text = stringResource(R.string.sign_in_with_google),
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                    fontWeight = FontWeight.W500,
-                    color = Color(0x8A000000),
-                )
+                style = MediumDimmedTextStyle
             )
         }
     }

@@ -97,6 +97,10 @@ private fun MenuContent(
         viewModel.setShowingScreen(true)
     }
 
+    println("isShowingScreen && isShowingLeftMenu = ${isShowingScreen && isShowingLeftMenu} ")
+    println("isShowingScreen :: $isShowingScreen \nisShowingLeftMenu :: $isShowingLeftMenu ")
+    println("________________________________________________________________________")
+
     Box(modifier = modifier.fillMaxSize()) {
         LeftMenu(
             modifier = Modifier.align(Alignment.TopStart),
@@ -118,7 +122,7 @@ private fun MenuContent(
             visible = isShowingScreen,
             enter = slideInHorizontally(
                 initialOffsetX = { it },
-                animationSpec = tween(durationMillis = 700),
+                animationSpec = tween(durationMillis = 550),
             ),
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
@@ -148,7 +152,9 @@ private fun MenuContent(
                         .padding(
                             top = 24.dp,
                             end = 8.dp,
-                        ), icon = R.drawable.ic_bag, buttonColor = LightOrange
+                        ),
+                    icon = R.drawable.ic_bag,
+                    buttonColor = LightOrange
                 )
             }
         }

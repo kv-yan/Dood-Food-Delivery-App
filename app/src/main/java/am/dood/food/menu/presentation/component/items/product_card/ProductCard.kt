@@ -4,9 +4,12 @@ import am.dood.food.R
 import am.dood.food.common.commonPresentation.components.buttons.SolidButton
 import am.dood.food.common.commonPresentation.components.image.Shadowed
 import am.dood.food.common.commonPresentation.components.stars.StarRating
+import am.dood.food.common.commonPresentation.ui.theme.HighlightedTextStyle
+import am.dood.food.common.commonPresentation.ui.theme.LightestGray
 import am.dood.food.menu.domain.model.Country
-import am.dood.food.menu.domain.model.Product
-import am.dood.food.menu.domain.model.ProductDetails
+import am.dood.food.menu.domain.model.product.Product
+import am.dood.food.menu.domain.model.product.ProductDetails
+import am.dood.food.menu.domain.model.product.ProductType
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.animateDp
@@ -51,19 +54,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-const val ENTER_ANIMATION_DURATION = 450
-const val EXIT_ANIMATION_DURATION = 350
+private const val ENTER_ANIMATION_DURATION = 450
+private const val EXIT_ANIMATION_DURATION = 350
 
 
 @Composable
@@ -79,52 +77,61 @@ fun ProductCard(
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     var productBackgroundImageHeight by remember { mutableIntStateOf(0) }
 
-    val transition = updateTransition(targetState = isExpanded, label = "ProductCardTransition")
+    val transition = updateTransition(
+        targetState = isExpanded, label = stringResource(R.string.anim_label_productcardtransition)
+    )
 
-    val cardHeight by transition.animateDp(label = "CardHeight",
+    val cardHeight by transition.animateDp(label = stringResource(R.string.anim_label_cardheight),
         transitionSpec = { tween(durationMillis = ENTER_ANIMATION_DURATION) }) { expanded ->
         if (expanded.value) screenHeight else 240.dp
     }
-    val cardWidth by transition.animateDp(label = "CardWidth",
+    val cardWidth by transition.animateDp(label = stringResource(R.string.anim_label_cardwidth),
         transitionSpec = { tween(durationMillis = ENTER_ANIMATION_DURATION) }) { expanded ->
         if (expanded.value) screenWidth else 168.dp
     }
-    val imagePaddingTop by transition.animateDp(label = "ImagePaddingTop",
+    val imagePaddingTop by transition.animateDp(label = stringResource(R.string.anim_label_imagepaddingtop),
         transitionSpec = { tween(durationMillis = if (isExpanded.value) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION) }) { expanded ->
         if (expanded.value) 82.dp else 0.dp
     }
-    val cardPaddingTop by transition.animateDp(label = "ImagePaddingTop",
+    val cardPaddingTop by transition.animateDp(label = stringResource(R.string.anim_label_cardpaddingtop),
         transitionSpec = { tween(durationMillis = if (isExpanded.value) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION) }) { expanded ->
         if (expanded.value) 0.dp else 48.dp
     }
-    val imageRotation by transition.animateFloat(label = "ImageRotation", transitionSpec = {
-        if (isExpanded.value) {
-            tween(
-                durationMillis = if (isExpanded.value) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION,
-                easing = CubicBezierEasing(0.4f, 0.0f, 0.2f, 1.3f) // Overshoot easing
-            )
-        } else {
-            tween(
-                durationMillis = if (isExpanded.value) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION,
-                easing = CubicBezierEasing(0.4f, 0.2f, 0.0f, 0.4f) // Overshoot easing
-            )
+    val imageRotation by transition.animateFloat(label = stringResource(R.string.anim_label_imagerotation),
+        transitionSpec = {
+            if (isExpanded.value) {
+                tween(
+                    durationMillis = if (isExpanded.value) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION,
+                    easing = CubicBezierEasing(0.4f, 0.0f, 0.2f, 1.3f) // Overshoot easing
+                )
+            } else {
+                tween(
+                    durationMillis = if (isExpanded.value) ENTER_ANIMATION_DURATION else EXIT_ANIMATION_DURATION,
+                    easing = CubicBezierEasing(0.4f, 0.2f, 0.0f, 0.4f) // Overshoot easing
+                )
 
-        }
-    }) { expanded ->
-        if (expanded.value) 0f else 90f
+            }
+        }) { expanded ->
+        if (expanded.value) {
+            when (product.productType) {
+                ProductType.PIZZA, ProductType.SALAD -> 90f
+                else -> 0f
+            }
+        } else 0f
     }
-    val imageSize by transition.animateDp(label = "ImageSize", transitionSpec = {
-        tween(
-            durationMillis = if (isExpanded.value) ENTER_ANIMATION_DURATION
-            else EXIT_ANIMATION_DURATION
-        )
-    }) { expanded ->
+    val imageSize by transition.animateDp(label = stringResource(R.string.anim_label_imagesize),
+        transitionSpec = {
+            tween(
+                durationMillis = if (isExpanded.value) ENTER_ANIMATION_DURATION
+                else EXIT_ANIMATION_DURATION
+            )
+        }) { expanded ->
         if (expanded.value) 324.dp else 172.dp
     }
 
 
     SideEffect {
-        systemUiController.setSystemBarsColor(if (isExpanded.value) Color(0xFFF3F3F3) else Color.Transparent)
+        systemUiController.setSystemBarsColor(if (isExpanded.value) LightestGray else Color.Transparent)
         systemUiController.statusBarDarkContentEnabled = true
     }
 
@@ -141,8 +148,7 @@ fun ProductCard(
 
 
     Box(
-        modifier = Modifier
-            .padding(if (isExpanded.value) 0.dp else 12.dp)
+        modifier = Modifier.padding(if (isExpanded.value) 0.dp else 12.dp)
     ) {
         Card(modifier = modifier
             .align(Alignment.BottomCenter)
@@ -171,41 +177,49 @@ fun ProductCard(
                 verticalArrangement = if (isExpanded.value) Arrangement.Top else Arrangement.Bottom
             ) {
                 // Convert px to dp
-                val productBackgroundImageHeightDp =
-                    with(LocalDensity.current) { productBackgroundImageHeight.toDp() }
+                val productBackgroundImageHeightDp = with(LocalDensity.current) {
+                    productBackgroundImageHeight.toDp()
+                }
 
                 StarRating(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
-                            top = if (isExpanded.value) productBackgroundImageHeightDp else 16.dp,
-                            bottom = 16.dp
+                            top = if (isExpanded.value) productBackgroundImageHeightDp
+                            else 16.dp, bottom = 16.dp
                         ),
                     rating = product.rating,
                     maxStars = 5,
                 )
 
-                if (isExpanded.value) ProductDetailsSection(
-                    modifier = Modifier
-                        .width(width = cardWidth)
-                        .padding(bottom = 16.dp),
-                    productDetails = product.productDetails
-                )
+                if (isExpanded.value) {
+                    ProductDetailsSection(
+                        modifier = Modifier
+                            .width(width = cardWidth)
+                            .padding(bottom = 16.dp),
+                        productDetails = product.productDetails
+                    )
 
-                if (isExpanded.value) ProductIngredientSection(
-                    modifier = Modifier
-                        .width(width = cardWidth)
-                        .padding(bottom = 16.dp),
-                    ingredients = product.productIngredients
-                )
-                if (!isExpanded.value) ProductCountrySection(
-                    modifier = Modifier.fillMaxWidth(),
-                    country = product.country,
-                    productName = product.name
-                )
-                if (!isExpanded.value) ProductPriceSection(
-                    modifier = Modifier.fillMaxWidth(), price = product.price.toFloat()
-                )
+                    ProductIngredientSection(
+                        modifier = Modifier
+                            .width(width = cardWidth)
+                            .padding(bottom = 16.dp),
+                        ingredients = product.productIngredients
+                    )
+                } else {
+                    ProductCountrySection(
+                        modifier = Modifier.fillMaxWidth(),
+                        country = product.country,
+                        productName = product.name
+                    )
+                    ProductPriceSection(
+                        modifier = Modifier.fillMaxWidth(),
+                        price = product.price.toFloat()
+                    )
+                }
+
+
+
 
                 if (isExpanded.value) {
                     Row(
@@ -222,12 +236,7 @@ fun ProductCard(
 
                         Text(
                             text = stringResource(R.string.product_price, quantity * product.price),
-                            style = TextStyle(
-                                fontSize = 24.sp,
-                                fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
-                                fontWeight = FontWeight(600),
-                                color = Color(0xFFFD7646),
-                            )
+                            style = HighlightedTextStyle
                         )
                     }
 
@@ -238,7 +247,7 @@ fun ProductCard(
                         onClick = {}) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_bag),
-                            contentDescription = "Cart",
+                            contentDescription = stringResource(R.string.cart),
                             tint = Color.White
                         )
                     }
@@ -246,17 +255,18 @@ fun ProductCard(
             }
         }
 
-        if (isExpanded.value) Image(
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .width(screenWidth)
-                .onGloballyPositioned { layoutCoordinates ->
-                    productBackgroundImageHeight = layoutCoordinates.size.height
-                },
-            painter = painterResource(id = R.drawable.ic_product_details_background),
-            contentDescription = "Menu",
-            contentScale = ContentScale.FillWidth
-        )
+        if (isExpanded.value)
+            Image(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .width(screenWidth)
+                    .onGloballyPositioned { layoutCoordinates ->
+                        productBackgroundImageHeight = layoutCoordinates.size.height
+                    },
+                painter = painterResource(id = R.drawable.ic_product_details_background),
+                contentDescription = null,
+                contentScale = ContentScale.FillWidth
+            )
 
         Shadowed(
             modifier = Modifier
@@ -270,10 +280,13 @@ fun ProductCard(
             blurRadius = 8.dp
         ) {
             Image(
-                modifier = Modifier.fillMaxSize(), painter = rememberAsyncImagePainter(
+                modifier = Modifier.fillMaxSize(),
+                painter = rememberAsyncImagePainter(
                     model = ImageRequest.Builder(LocalContext.current).data(product.image)
                         .crossfade(true).build()
-                ), contentDescription = product.name, contentScale = ContentScale.Crop
+                ),
+                contentDescription = product.name,
+                contentScale = ContentScale.Crop
             )
         }
 
@@ -301,13 +314,17 @@ private fun FoodAssortmentItemPreview() {
     ProductCard(
         isExpanded = isExpanded, product = Product(
             productId = 0,
-            name = "Pizza Margarita",
+            name = stringResource(R.string.test_pizza_name),
             price = 10.0,
-            image = "https://s3-alpha-sig.figma.com/img/3cbc/a5cf/d3466f4f3a121c9867c8de88159afd31?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=EJ2guOxJI9p5166pCTSsNXoffQHTlmGxnO9Mo7He19gFJbmAxsiE5MmXDuRBNx9GqUxAXWKhVphvBQoGQF0rLpnbDQHw73w75jEjhLVErt5ortSqN4c4E8BP2wycZjHGa6KpqnqqHszQXc9hD8ND~EEjKlgwG~3IfAQpVfBtZtAXpt2z4NrOq0SsFJr8MStjOU8t-oUkMm~d-zr-yUALBCvpkCe8YYnPqfrkLLLEF3RDKrUayl49Fc6VtWU7Ka4wNY-p3S1FYssg~WwQvrQfCMHSWYURiio9tR~hviBt8ld1IuMGaWSSqBQ965t4EdD7fz1P5q~5jWnzjpvzAz37rQ__",
+            image = stringResource(R.string.test_piza_image),
             country = Country.ITALY,
             rating = 3.7f,
-            productDetails = ProductDetails("", "", ""),
-            productIngredients = emptyList()
+            productIngredients = emptyList(),
+            productDetails = ProductDetails(
+                calories = stringResource(R.string.empty_string),
+                weight = stringResource(R.string.empty_string),
+                preparationTime = stringResource(R.string.empty_string)
+            )
         )
     )
 }

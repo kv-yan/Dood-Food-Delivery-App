@@ -3,6 +3,7 @@ package am.dood.food.common.commonPresentation.utils
 import am.dood.food.menu.domain.model.Assortment
 import am.dood.food.menu.domain.model.FoodAssortment
 
+// TODO: write normal mock data
 val appAssortment = listOf(
     FoodAssortment(
         assortmentId = 1,
@@ -35,5 +36,3 @@ val appAssortment = listOf(
         products = pizzaAssortment
     ),
 )
-
-

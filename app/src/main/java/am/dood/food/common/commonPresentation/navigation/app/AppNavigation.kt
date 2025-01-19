@@ -38,7 +38,10 @@ fun AppNavigation(
             }
 
             composable<AppNavDestination.Menu> {
-                MenuScreen(onChangeTheme = onChangeTheme, onAppClose = onAppClose)
+                MenuScreen(
+                    onChangeTheme = onChangeTheme,
+                    onAppClose = onAppClose
+                )
             }
         }
     }
