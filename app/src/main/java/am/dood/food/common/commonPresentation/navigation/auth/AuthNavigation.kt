@@ -30,7 +30,9 @@ fun AuthNavigation(
         val navController = rememberNavController()
 
         NavHost(
-            navController = navController, startDestination = startDestination, modifier = modifier
+            navController = navController,
+            startDestination = startDestination,
+            modifier = modifier
         ) {
             composable<AuthNavDestination.Login> {
                 SignInScreen(
@@ -40,7 +42,7 @@ fun AuthNavigation(
                     onForgotPasswordClick = {
                         navController.navigate(AuthNavDestination.ForgotPassword)
                     },
-                    navigateToMenu = navigateToMenu
+                    navigateToMenu = { navigateToMenu() }
                 )
             }
 
@@ -49,7 +51,7 @@ fun AuthNavigation(
                     onSignInClick = {
                         navController.navigateUp()
                     },
-                    navigateToMenu = navigateToMenu
+                    navigateToMenu = { navigateToMenu() }
                 )
             }
 

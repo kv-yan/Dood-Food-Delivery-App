@@ -14,7 +14,7 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun AppNavigation(
     modifier: Modifier = Modifier,
-    startDestination: AppNavDestination = AppNavDestination.Menu,
+    startDestination: AppNavDestination = AppNavDestination.Auth,
     onAppClose: () -> Unit = {},
     onChangeTheme: (isDarkTheme: Boolean) -> Unit = {},
 ) {

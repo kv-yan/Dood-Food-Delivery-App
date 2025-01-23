@@ -29,7 +29,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SignUpScreen(
-    modifier: Modifier = Modifier, onSignInClick: () -> Unit = {}, navigateToMenu: () -> Unit = {}
+    modifier: Modifier = Modifier,
+    onSignInClick: () -> Unit = {},
+    navigateToMenu: () -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
     Box(

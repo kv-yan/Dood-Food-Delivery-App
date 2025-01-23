@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ProductCountrySection(
     modifier: Modifier = Modifier,
-    country: Country,
+    country: Country? = null,
     productName: String,
 ) {
     Row(
@@ -30,13 +30,15 @@ fun ProductCountrySection(
                 bottom = 8.dp,
             )
     ) {
-        Image(
-            modifier = Modifier
-                .width(20.dp)
-                .height(14.dp),
-            painter = painterResource(id = country.icon),
-            contentDescription = country.type,
-        )
+        country?.let {
+            Image(
+                modifier = Modifier
+                    .width(20.dp)
+                    .height(14.dp),
+                painter = painterResource(id = it.icon),
+                contentDescription = it.type,
+            )
+        }
 
         Text(
             modifier = Modifier.padding(start = 8.dp),

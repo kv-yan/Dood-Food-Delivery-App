@@ -6,11 +6,12 @@ data class Product(
     val productId: Int,
     val name: String,
     val price: Double,
-    val image: String,
-    val country: Country,
+    val image: ImageSource,
+    val country: Country? = null,
     val rating: Float = 3.7f,
     val productType: ProductType = ProductType.OTHER,
-    val productDetails: ProductDetails,
-    val productIngredients: List<ProductIngredient>
+    val productDetails: ProductDetails? = null,
+    val productIngredients: List<ProductIngredient>? = null
 )
+
 

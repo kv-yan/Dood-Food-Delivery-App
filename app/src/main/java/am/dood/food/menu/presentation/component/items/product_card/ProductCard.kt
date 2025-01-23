@@ -7,6 +7,7 @@ import am.dood.food.common.commonPresentation.components.stars.StarRating
 import am.dood.food.common.commonPresentation.ui.theme.HighlightedTextStyle
 import am.dood.food.common.commonPresentation.ui.theme.LightestGray
 import am.dood.food.menu.domain.model.Country
+import am.dood.food.menu.domain.model.product.ImageSource
 import am.dood.food.menu.domain.model.product.Product
 import am.dood.food.menu.domain.model.product.ProductDetails
 import am.dood.food.menu.domain.model.product.ProductType
@@ -193,25 +194,30 @@ fun ProductCard(
                 )
 
                 if (isExpanded.value) {
-                    ProductDetailsSection(
-                        modifier = Modifier
-                            .width(width = cardWidth)
-                            .padding(bottom = 16.dp),
-                        productDetails = product.productDetails
-                    )
+                    product.productDetails?.let {
+                        ProductDetailsSection(
+                            modifier = Modifier
+                                .width(width = cardWidth)
+                                .padding(bottom = 16.dp),
+                            productDetails = it
+                        )
+                    }
 
-                    ProductIngredientSection(
-                        modifier = Modifier
-                            .width(width = cardWidth)
-                            .padding(bottom = 16.dp),
-                        ingredients = product.productIngredients
-                    )
+                    product.productIngredients?.let {
+                        ProductIngredientSection(
+                            modifier = Modifier
+                                .width(width = cardWidth)
+                                .padding(bottom = 16.dp),
+                            ingredients = it
+                        )
+                    }
                 } else {
                     ProductCountrySection(
                         modifier = Modifier.fillMaxWidth(),
                         country = product.country,
                         productName = product.name
                     )
+
                     ProductPriceSection(
                         modifier = Modifier.fillMaxWidth(),
                         price = product.price.toFloat()
@@ -281,10 +287,16 @@ fun ProductCard(
         ) {
             Image(
                 modifier = Modifier.fillMaxSize(),
-                painter = rememberAsyncImagePainter(
-                    model = ImageRequest.Builder(LocalContext.current).data(product.image)
-                        .crossfade(true).build()
-                ),
+                painter = when (val imageSource = product.image) {
+                    is ImageSource.Url -> rememberAsyncImagePainter(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(imageSource.url)
+                            .crossfade(true)
+                            .build()
+                    )
+
+                    is ImageSource.Resource -> painterResource(id = imageSource.resId)
+                },
                 contentDescription = product.name,
                 contentScale = ContentScale.Crop
             )
@@ -316,7 +328,7 @@ private fun FoodAssortmentItemPreview() {
             productId = 0,
             name = stringResource(R.string.test_pizza_name),
             price = 10.0,
-            image = stringResource(R.string.test_piza_image),
+            image = ImageSource.Url(stringResource(R.string.test_piza_image)),
             country = Country.ITALY,
             rating = 3.7f,
             productIngredients = emptyList(),
