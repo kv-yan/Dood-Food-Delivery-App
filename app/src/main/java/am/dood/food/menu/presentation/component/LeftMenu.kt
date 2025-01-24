@@ -33,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import androidx.compose.ui.zIndex
@@ -47,6 +48,7 @@ fun LeftMenu(
     onAssortmentChanged: (FoodAssortment) -> Unit,
     selectedIndex: Int = 0
 ) {
+    val stickyHeader = stringResource(R.string.sticky_header_key)
 
     AnimatedVisibility(
         modifier = modifier
@@ -55,20 +57,20 @@ fun LeftMenu(
             .width(52.dp),
         visible = isShowingMenu,
         enter = slideInHorizontally(
-            initialOffsetX = { -it }, animationSpec = tween(durationMillis = 500)
+            initialOffsetX = { -it },
+            animationSpec = tween(durationMillis = 500)
         ),
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             // Calculate offset dynamically
-            val itemHeight = 86.dp // 24 (top) + 38 (content) + 24 (bottom)
-            val startOffset =
-                24.dp + (34.dp / 2) + (itemHeight * 2) // Start after the first two items
+            val itemHeight = 86.dp
+            val startOffset = 24.dp + (34.dp / 2) + (itemHeight * 2)
 
             // Animate highlight offset
             val highlightOffset by animateDpAsState(
                 targetValue = startOffset + (selectedIndex * itemHeight),
                 animationSpec = tween(durationMillis = 300, easing = FastOutSlowInEasing),
-                label = "HighlightOffsetAnimation"
+                label = stringResource(R.string.anim_label_highlight_offset_)
             )
 
             // Highlight Shape
@@ -101,24 +103,27 @@ fun LeftMenu(
                     .background(LightOrange)
                     .systemBarsPadding(),
             ) {
-                stickyHeader(key = "sticky_header") {
+                stickyHeader(key = stickyHeader) {
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(36.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         AppIconButton(
-                            modifier = Modifier.padding(top = 24.dp), icon = R.drawable.ic_menu
+                            modifier = Modifier.padding(top = 24.dp),
+                            icon = R.drawable.ic_menu,
                         )
                         AppIconButton(
                             modifier = Modifier.padding(vertical = 24.dp),
-                            icon = R.drawable.ic_search
+                            icon = R.drawable.ic_search,
                         )
                     }
                 }
 
-                items(items = assortment,
-                    key = { item -> item.assortmentId }) { item ->
+                items(
+                    items = assortment,
+                    key = { item -> item.assortmentId }
+                ) { item ->
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()

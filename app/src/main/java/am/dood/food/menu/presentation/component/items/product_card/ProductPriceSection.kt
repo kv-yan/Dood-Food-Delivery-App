@@ -1,6 +1,7 @@
 package am.dood.food.menu.presentation.component.items.product_card
 
 import am.dood.food.R
+import am.dood.food.common.commonPresentation.ui.theme.AccentTextStyle
 import am.dood.food.common.commonPresentation.ui.theme.LightOrange
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -16,12 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 
 @Composable
@@ -34,12 +30,7 @@ fun ProductPriceSection(modifier: Modifier = Modifier, price: Float) {
         Text(
             modifier = Modifier.padding(start = 24.dp),
             text = stringResource(R.string.product_price, price.toInt()),
-            style = TextStyle(
-                fontSize = 18.sp,
-                fontFamily = FontFamily(Font(R.font.montserrat_semibold)),
-                fontWeight = FontWeight.W600,
-                color = LightOrange,
-            )
+            style = AccentTextStyle
         )
 
         IconButton(
@@ -52,7 +43,7 @@ fun ProductPriceSection(modifier: Modifier = Modifier, price: Float) {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_add),
-                contentDescription = "Add to cart"
+                contentDescription = stringResource(R.string.label_add_to_cart)
             )
         }
     }

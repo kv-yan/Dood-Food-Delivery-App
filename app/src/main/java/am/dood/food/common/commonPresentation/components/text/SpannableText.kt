@@ -2,11 +2,14 @@
 
 package am.dood.food.common.commonPresentation.components.text
 
+import am.dood.food.R
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -19,13 +22,14 @@ fun SpannableText(
     modifier: Modifier = Modifier,
     fullText: String,
     underlineText: String,
-    color: Color = Color(0xFF000000),
+    color: Color = Color.Black,
     fontSize: Int = 13,
     fontFamily: FontFamily? = FontFamily.Default,
     fontWeight: FontWeight = FontWeight.Normal,
     textAlign: TextAlign = TextAlign.Center,
     onClick: (() -> Unit)? = null
 ) {
+    val label = stringResource(R.string.label_clickable)
     val annotatedString = buildAnnotatedString {
         val startIndex = fullText.indexOf(underlineText)
         val endIndex = startIndex + underlineText.length
@@ -66,14 +70,18 @@ fun SpannableText(
     ClickableText(
         modifier = modifier,
         text = annotatedString,
-        style = androidx.compose.ui.text.TextStyle(
+        style = TextStyle(
             textAlign = textAlign,
             fontSize = fontSize.sp,
             fontFamily = fontFamily,
             fontWeight = fontWeight
         ),
         onClick = { offset ->
-            annotatedString.getStringAnnotations(tag = "clickable", start = offset, end = offset)
+            annotatedString.getStringAnnotations(
+                tag = label,
+                start = offset,
+                end = offset
+            )
                 .firstOrNull()?.let {
                     onClick?.invoke()
                 }

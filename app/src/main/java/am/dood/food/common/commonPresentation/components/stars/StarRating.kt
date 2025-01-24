@@ -18,7 +18,7 @@ fun StarRating(
     rating: Float,
     maxStars: Int = 5,
 ) {
-    val size =  16.dp
+    val size = 16.dp
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -27,11 +27,10 @@ fun StarRating(
         for (i in 1..maxStars) {
             when {
                 i <= rating -> {
-                    // Fully filled star
                     Icon(
                         modifier = Modifier.size(size),
                         painter = painterResource(id = R.drawable.ic_star_full),
-                        contentDescription = "Half Star",
+                        contentDescription = null,
                         tint = LightOrange
                     )
                 }
@@ -40,17 +39,16 @@ fun StarRating(
                     Icon(
                         modifier = Modifier.size(size),
                         painter = painterResource(id = R.drawable.ic_star_full),
-                        contentDescription = "Half Star",
+                        contentDescription = null,
                         tint = LightOrange
                     )
                 }
 
                 else -> {
-                    // Outlined star
                     Icon(
                         modifier = Modifier.size(size),
                         painter = painterResource(id = R.drawable.ic_star_outlined),
-                        contentDescription = "Half Star",
+                        contentDescription = null,
                         tint = LightOrange
                     )
                 }

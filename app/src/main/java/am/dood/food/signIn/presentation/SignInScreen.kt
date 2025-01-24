@@ -5,6 +5,9 @@ import am.dood.food.common.commonPresentation.components.buttons.GoogleButton
 import am.dood.food.common.commonPresentation.components.buttons.SolidButton
 import am.dood.food.common.commonPresentation.components.text.SpannableText
 import am.dood.food.common.commonPresentation.components.textField.InputTextField
+import am.dood.food.common.commonPresentation.ui.theme.LargeTitleTextStyle
+import am.dood.food.common.commonPresentation.ui.theme.TinyDimmedTextStyle
+import am.dood.food.common.commonPresentation.ui.theme.TitleTextStyle
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,13 +23,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
 fun SignInScreen(
@@ -59,12 +59,7 @@ fun SignInScreen(
                     .fillMaxWidth()
                     .padding(bottom = 32.dp),
                 text = stringResource(R.string.login),
-                style = TextStyle(
-                    fontSize = 36.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_regular)),
-                    fontWeight = FontWeight.Normal,
-                    textAlign = TextAlign.Center,
-                )
+                style = LargeTitleTextStyle
             )
 
             GoogleButton(
@@ -76,12 +71,7 @@ fun SignInScreen(
                     .fillMaxWidth()
                     .padding(top = 32.dp),
                 text = stringResource(R.string.or),
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_regular)),
-                    fontWeight = FontWeight.Normal,
-                    textAlign = TextAlign.Center,
-                )
+                style = TitleTextStyle
             )
 
             InputTextField(
@@ -107,16 +97,10 @@ fun SignInScreen(
                             onForgotPasswordClick()
                         },
                     text = stringResource(R.string.forget_password),
-                    style = TextStyle(
-                        fontSize = 11.sp,
-                        fontFamily = FontFamily(Font(R.font.roboto_regular)),
-                        fontWeight = FontWeight.Normal,
-                        color = Color(0x66000000),
-                        textAlign = TextAlign.End,
-                    )
+                    style = TinyDimmedTextStyle
                 )
-
             }
+
             SolidButton(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -132,7 +116,7 @@ fun SignInScreen(
                     .padding(top = 12.dp),
                 fullText = stringResource(R.string.don_t_have_an_account_sign_up),
                 underlineText = stringResource(R.string.sign_up),
-                color = Color(0xFF000000),
+                color = Color.Black,
                 fontSize = 13,
                 fontFamily = FontFamily(Font(R.font.roboto_regular)),
                 fontWeight = FontWeight.Normal,

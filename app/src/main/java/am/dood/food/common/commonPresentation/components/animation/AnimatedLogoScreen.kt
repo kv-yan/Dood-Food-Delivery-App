@@ -6,7 +6,6 @@ import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateDp
-import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Image
@@ -34,39 +33,33 @@ import kotlinx.coroutines.delay
 fun AnimatedLogoScreen(modifier: Modifier = Modifier, appContent: @Composable () -> Unit = {}) {
 
     var startAnimation by remember { mutableStateOf(false) }
-    val transition = updateTransition(targetState = startAnimation, label = "LogoTransition")
-
-    val animationProgress by transition.animateFloat(
-        transitionSpec = { tween(durationMillis = 1300, easing = FastOutSlowInEasing) },
-        label = "AnimationProgress"
-    ) { animated -> if (animated) 1f else 0f }
-
-    val isHalfway = animationProgress >= 0.1f
-    val isComplete = animationProgress >= 1f
+    val transition = updateTransition(
+        targetState = startAnimation, label = stringResource(R.string.anim_label_logo_transition)
+    )
 
     val horizontalMargin by transition.animateDp(
         transitionSpec = { tween(durationMillis = 1300, easing = FastOutSlowInEasing) },
-        label = "HorizontalMargin"
+        label = stringResource(R.string.anim_label_horizontal_margin)
     ) { animated -> if (animated) 32.dp else 82.dp }
 
     val verticalMargin by transition.animateDp(
         transitionSpec = { tween(durationMillis = 1300, easing = FastOutSlowInEasing) },
-        label = "VerticalMargin"
+        label = stringResource(R.string.anim_label_vertical_margin)
     ) { animated -> if (animated) 64.dp else 258.dp }
 
     val logoWidth by transition.animateDp(
         transitionSpec = { tween(durationMillis = 1300, easing = FastOutSlowInEasing) },
-        label = "LogoWidth"
+        label = stringResource(R.string.anim_label_logo_width)
     ) { animated -> if (animated) 119.dp else 211.dp }
 
     val logoHeight by transition.animateDp(
         transitionSpec = { tween(durationMillis = 1300, easing = FastOutSlowInEasing) },
-        label = "LogoHeight"
+        label = stringResource(R.string.anim_label_logo_height)
     ) { animated -> if (animated) 71.dp else 126.dp }
 
     val backgroundColor: Color by transition.animateColor(
         transitionSpec = { tween(durationMillis = 800, easing = LinearEasing) },
-        label = "BackgroundColor"
+        label = stringResource(R.string.anim_label_background_color)
     ) { animated -> if (animated) Color.Transparent else LightOrange }
 
     // Start Animation with Delay
@@ -103,7 +96,6 @@ fun AnimatedLogoScreen(modifier: Modifier = Modifier, appContent: @Composable ()
             }
 
         }
-        // Animated Logo
     }
 }
 

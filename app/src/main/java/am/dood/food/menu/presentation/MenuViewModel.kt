@@ -1,7 +1,7 @@
 package am.dood.food.menu.presentation
 
 import am.dood.food.menu.domain.model.FoodAssortment
-import am.dood.food.menu.domain.model.Product
+import am.dood.food.menu.domain.model.product.Product
 import am.dood.food.menu.domain.usaCase.GetAssortmentsUseCase
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -31,7 +31,7 @@ class MenuViewModel(
     private val _isShowingScreen = MutableStateFlow(false)
     val isShowingScreen: StateFlow<Boolean> = _isShowingScreen.asStateFlow()
 
-    private val _isDetailsVisible = MutableStateFlow(false)
+    private val _isDetailsVisible = MutableStateFlow(true)
     val isShowingLeftMenu: StateFlow<Boolean> = _isDetailsVisible.asStateFlow()
 
     private val _selectedAssortmentIndex = MutableSharedFlow<Int>(1)
@@ -49,7 +49,6 @@ class MenuViewModel(
     fun selectAssortment(item: FoodAssortment, index: Int) = run {
         _selectedAssortment.value = item
         _selectedAssortmentIndex.tryEmit(index)
-
     }
 
     fun setSelectProduct(item: Product?) = run { _selectedProduct.value = item }

@@ -24,4 +24,34 @@
     <string name="recommendation">Recommendation</string>
     <string name="product_price">$ %1$s</string>
     <string name="order_now">Order Now</string>
+    <string name="anim_label_logo_transition">LogoTransition</string>
+    <string name="anim_label_horizontal_margin">HorizontalMargin</string>
+    <string name="anim_label_vertical_margin">VerticalMargin</string>
+    <string name="anim_label_logo_width">LogoWidth</string>
+    <string name="anim_label_logo_height">LogoHeight</string>
+    <string name="anim_label_background_color">BackgroundColor</string>
+    <string name="label_clickable">clickable</string>
+    <string name="anim_label_productcardtransition">ProductCardTransition</string>
+    <string name="anim_label_cardheight">CardHeight</string>
+    <string name="anim_label_cardwidth">CardWidth</string>
+    <string name="anim_label_imagepaddingtop">ImagePaddingTop</string>
+    <string name="anim_label_cardpaddingtop">CardPaddingTop</string>
+    <string name="anim_label_imagerotation">ImageRotation</string>
+    <string name="anim_label_imagesize">ImageSize</string>
+    <string name="test_pizza_name">Pizza Margarita</string>
+    <string name="test_piza_image"><![CDATA[https://s3-alpha-sig.figma.com/img/3cbc/a5cf/d3466f4f3a121c9867c8de88159afd31?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=EJ2guOxJI9p5166pCTSsNXoffQHTlmGxnO9Mo7He19gFJbmAxsiE5MmXDuRBNx9GqUxAXWKhVphvBQoGQF0rLpnbDQHw73w75jEjhLVErt5ortSqN4c4E8BP2wycZjHGa6KpqnqqHszQXc9hD8ND~EEjKlgwG~3IfAQpVfBtZtAXpt2z4NrOq0SsFJr8MStjOU8t-oUkMm~d-zr-yUALBCvpkCe8YYnPqfrkLLLEF3RDKrUayl49Fc6VtWU7Ka4wNY-p3S1FYssg~WwQvrQfCMHSWYURiio9tR~hviBt8ld1IuMGaWSSqBQ965t4EdD7fz1P5q~5jWnzjpvzAz37rQ__]]></string>
+    <string name="label_close">Close</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="label_add_to_cart">Add to cart</string>
+    <string name="what_food_do_you_want">What food do you want?</string>
+    <string name="food_country_all">All</string>
+    <string name="food_country_georgia">Georgia</string>
+    <string name="food_country_armenia">Armenia</string>
+    <string name="food_country_russia">Russia</string>
+    <string name="food_country_italy">Italy</string>
+    <string name="food_country_france">France</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="anim_label_highlight_offset_">HighlightOffsetAnimation</string>
+    <string name="sticky_header_key">sticky_header</string>
+    <string name="cart">Cart</string>
 </resources>

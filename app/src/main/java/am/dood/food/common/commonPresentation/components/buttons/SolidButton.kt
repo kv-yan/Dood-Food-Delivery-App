@@ -2,6 +2,7 @@ package am.dood.food.common.commonPresentation.components.buttons
 
 import am.dood.food.R
 import am.dood.food.common.commonPresentation.ui.theme.LightOrange
+import am.dood.food.common.commonPresentation.ui.theme.SubtitleTextStyle
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,13 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 
 @Composable
@@ -51,12 +46,7 @@ fun SolidButton(
             Text(
                 modifier = Modifier
                     .padding(vertical = 16.dp),
-                text = text, style = TextStyle(
-                    fontSize = 18.sp,
-                    fontFamily = FontFamily(Font(R.font.roboto_medium)),
-                    fontWeight = FontWeight.W500,
-                    textAlign = TextAlign.Center,
-                )
+                text = text, style = SubtitleTextStyle
             )
         }
     }

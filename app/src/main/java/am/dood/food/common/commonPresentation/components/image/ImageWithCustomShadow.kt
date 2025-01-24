@@ -65,7 +65,6 @@ fun Shadowed(
     Layout(
         modifier = modifier,
         content = {
-            // measurables[0] = content, measurables[1] = shadow
             content()
             Box(modifier = shadowModifier) { content() }
         }
